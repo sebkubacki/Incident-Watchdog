@@ -1,0 +1,20 @@
+#!/usr/bin/env/python3
+
+def main_menu(logs):
+
+    print("=== INCIDENT WATCHDOG ===")
+
+    user_choice = input(
+        """
+Do you want to perform operations on parsed logs?
+
+1. Yes
+2. No
+
+Choose option: """
+    )
+
+    if user_choice == "1":
+
+        while True:
+		main_menu(logs)

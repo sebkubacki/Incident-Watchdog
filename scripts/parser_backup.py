@@ -3,7 +3,7 @@
 def parse_logs(path):
 
     parts = []
-    events = []
+    events= []
 
     # PARSOWANIE DANYCH
     with open(path) as f:
@@ -19,20 +19,21 @@ def parse_logs(path):
                 parts.append(parsed_line)
 
     # TWORZENIE SŁOWNIKA
-    incidents = []
-    devices = set()
+    devices = {}
+
     for part in parts:
 
-        incident = {
-            "device_id": part[0],
-            "timestamp": part[1],
-            "status": part[2],
-            "info": part[3]
-        }
-        incidents.append(incident)
-        
-        devices.add(part[0])
-    
-    return incidents, devices
+        device_id = part[0]
 
-parse_logs("../logs/atm.log")
+        event = part[1:]
+
+        print(events)
+
+        if device_id not in devices:
+            devices[device_id] = []
+
+        devices[device_id].append(event)
+        
+
+
+    return devices
