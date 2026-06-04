@@ -2,13 +2,26 @@ from parser import parse_logs
 
 incidents, devices = parse_logs("../logs/atm.log")
 
+def get_history(selected_device):
+    filtered_incidents = [
+        incident for incident in incidents
+        if incident["device_id"] == selected_device
+        ]
+    return filtered_incidents
+
+def get_status_count(selected_status):
+    status_counter = 0
+    for incident in incidents:
+        if incident['status'] == selected_status:
+            status_counter+=1
+    return status_counter
+
 def show_list(list):
     print("\n".join(list))
 
 def show_history():
-    selected_device = ""
-    while selected_device.lower() != "exit":
-        print("""2
+    while True:
+        print("""
         ATM STATUS HISTORY
         Check incidents of any ATM
         If you want to quit type "Exit"
@@ -17,10 +30,7 @@ def show_history():
         """)
         selected_device = input()
         if selected_device in devices:
-            filtered_incidents = [
-                 incident for incident in incidents
-                if incident["device_id"] == selected_device
-                ]
+            filtered_incidents = get_history(selected_device)
             device_statuses = "\n".join(
                   f"{incident['timestamp']} | {incident['device_id']} | {incident['status']} | {incident['info']}"
                     for incident in filtered_incidents
@@ -28,14 +38,14 @@ def show_history():
             print(device_statuses)
         elif selected_device.lower() == "show list":
             show_list(devices)
+        elif selected_device.lower() == "exit":
+            break
         else:
             print("Wrong ATM ID or invalid data entered.")
 
 def count_statuses():
     defined_statuses = ["ERROR", "WARNING", "INFO", "OK"]
-    selected_status = ""
-    while selected_status.lower() != "exit":
-        status_counter = 0
+    while True:
         print("""
             CHECK ATM STATUS
             Check number of given statuses in incident list
@@ -45,14 +55,13 @@ def count_statuses():
             """)
         selected_status = input().upper()
         if selected_status in defined_statuses:
-            for incident in incidents:
-                if incident['status'] == selected_status:
-                    status_counter+=1
-            status_counter_str = str(status_counter)
-            print(f"{selected_status}: {status_counter_str}")
+            status_counter = get_status_count(selected_status)
+            print(f"{selected_status}: {status_counter}")
         elif selected_status.lower() == "show list":
             show_list(defined_statuses)
-        elif selected_status.lower() != "exit":
+        elif selected_status.lower() == "exit":
+            break
+        else:
             print("Wrong status name or invalid data entered.")
 
 def top_incidents():
@@ -69,7 +78,7 @@ def top_incidents():
         print(f"{inc}: {incidents_info[inc]}")
 
 def detect_instability():
-    #todo:  development of instability conditions, check frequency fo events etc.
+    #todo:  development of instability conditions, check frequency for events, rate instability in %.
     previous_status = None
     current_status = None
     for device in devices:
