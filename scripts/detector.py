@@ -82,32 +82,31 @@ def detect_instability():
     previous_status = None
     current_status = None
     for device in devices:
+        previous_status = None
         status_change = 0
         for inc in incidents:
             if inc["device_id"] == device:
                 current_status = inc['status']
-                if previous_status != "None":
-                    if previous_status is not None:
-                        if previous_status == "OK":
-                            if current_status == "ERROR":
-                                status_change += 3
-                            if current_status == "WARNING":
-                                status_change += 1
-                            if current_status == "INFO":
-                                status_change += 1
-                        if previous_status == "WARNING":
-                            if current_status == "ERROR":
-                                status_change += 2
-                            if current_status == "OK":
-                                status_change += 0
-                            if current_status == "INFO":
-                                status_change += 1
+                if previous_status is not None:
+                    if previous_status == "OK":
                         if current_status == "ERROR":
-                            if previous_status == "WARNING":
-                                status_change += 1
-                    previous_status = current_status
+                            status_change += 3
+                        if current_status == "WARNING":
+                            status_change += 1
+                        if current_status == "INFO":
+                            status_change += 1
+                    if previous_status == "WARNING":
+                        if current_status == "ERROR":
+                            status_change += 2
+                        if current_status == "OK":
+                            status_change += 0
+                        if current_status == "INFO":
+                            status_change += 1
+                    if previous_status == "ERROR":
+                        if current_status == "WARNING":
+                            status_change += 1
+                previous_status = current_status
         print(f"{device} - status changed {status_change} times")
-detect_instability()
 
             
         
