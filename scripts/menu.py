@@ -2,16 +2,13 @@ from detector import (
         show_history,
         count_statuses,
         top_incidents,
-        detect_instability
+        detect_instability,
+        show_sorted()vim
 )
 
-def show_sorted(incidents):
-    sorted_incidents = sorted(incidents, key=lambda x: x["timestamp"])
-    print(sorted_incidents)
 
 
-
-def main_menu():
+def main_menu(incidents, devices):
 
     MAIN_MENU = """
 ========================
@@ -22,7 +19,8 @@ def main_menu():
 2. Count statuses
 3. Top incidents
 4. Detect instability
-5. Exit
+5. Show all incidents sorted by time
+6. Exit
 """
 
     while True:
@@ -31,18 +29,21 @@ def main_menu():
         choice = input("Select option: ")
 
         if choice == "1":
-            show_history()
+            show_history(incidents, devices)
 
         elif choice == "2":
-            count_statuses()
+            count_statuses(incidents)
 
         elif choice == "3":
-            top_incidents()
+            top_incidents(incidents)
 
         elif choice == "4":
-            detect_instability()
+            detect_instability(incidents, devices)
 
         elif choice == "5":
+            show_sorted(incidents)
+
+        elif choice == "6":
             break
 
         else:

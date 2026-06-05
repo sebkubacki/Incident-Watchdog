@@ -35,4 +35,3 @@ def parse_logs(path):
     
     return incidents, devices
 
-parse_logs("../logs/atm.log")
