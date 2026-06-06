@@ -7,7 +7,7 @@ ATM_DEVICES = {
         "ATM006": "ATM",
         "ATM007": "ATM",
         "ATM008": "ATM"
-        ]
+        }
 
 REC_DEVICES = {
         "REC001": "REC",

@@ -1,4 +1,4 @@
-COMMON_MODULE = {
+COMMON_MODULES = {
     "NETWORK": {
             "CONNECTION_LOST": "ERROR",
             "HIGH_LATENCY": "WARNING",
@@ -6,7 +6,7 @@ COMMON_MODULE = {
             "CONNECTION_STABLE": "OK",
             "PING_SUCCESFULL": "OK",
             "PACKET_LOST_ALERT": "WARNING",
-            "MEDIUM_LATENCY": "WARNING"
+            "MEDIUM_LATENCY": "WARNING",
             "ROUTER_POWER_LOST": "ERROR",
             "ROUTER_POWER_RETURN": "OK"
             },
@@ -49,7 +49,7 @@ COMMON_MODULE = {
             "SAFE_ACCESS_RESTORED": "INFO"
         }
     }
-ATM_MODULES = (
+ATM_MODULES = {
         "CASH_DISPENSER": {
             "CASH_JAM": "ERROR",
             "DISPENSER_TIMEOUT": "ERROR",
@@ -78,7 +78,7 @@ ATM_MODULES = (
             }
     }
 
-RECYCLER_MODULES = {
+REC_MODULES = {
 
         "DEPOSIT_MODULE": {
             "TRANSPORT_BLOCKED": "ERROR",
