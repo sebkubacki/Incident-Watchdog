@@ -1,4 +1,6 @@
 import random
+import time
+from datetime import datetime
 from config.devices import ATM_DEVICES, REC_DEVICES
 from config.events import COMMON_MODULES, ATM_MODULES, REC_MODULES
 
@@ -41,6 +43,11 @@ def get_status(events, event):
     status = events[event]
     return status
 
+def get_timestamp():
+    now = datetime.now()
+    formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
+    return formatted_now
+
 def generate_event():
     rnd_device = get_random_device()
     device_type = get_device_type(rnd_device)
@@ -49,13 +56,32 @@ def generate_event():
     events = get_events_for_module(avalible_modules, rnd_module)
     rnd_event = get_random_event(events)
     status = get_status(events, rnd_event)
-    print(f"""
-    Device: {rnd_device}
-    Type: {device_type}
-    Module: {rnd_module}
-    Event: {rnd_event}
-    Status: {status}
-    """)
+    timestamp = get_timestamp()
+    log_data = {
+            "device": rnd_device,
+            "device_type": device_type,
+            "module": rnd_module,
+            "event": rnd_event,
+            "status": status,
+            "timestamp": timestamp
+        }
+    return log_data
+    
+def format_log_entry(log_data):
+    log = f"{log_data['device']} | {log_data['timestamp']} | {log_data['status']} | {log_data['module']}: {log_data['event']}"
+    return log
 
+def write_log(log_entry):
+    with open("./logs/live.log", "a", encoding="utf-8") as plik:
+        plik.write(log_entry)
+    
 
-generate_event()
+def generate_log():
+    while(True):
+        log_data = generate_event()
+        log_entry = format_log_entry(log_data)
+        write_log(log_entry + "\n")
+        delay = random.uniform(1, 5)
+        time.sleep(delay)
+
+generate_log()

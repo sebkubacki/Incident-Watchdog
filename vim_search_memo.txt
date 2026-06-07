@@ -1,0 +1,237 @@
+# Vim — Wyszukiwanie i zamiana (ściąga)
+
+## Podstawowe wyszukiwanie
+
+| Komenda | Działanie |
+|----------|------------|
+| `/tekst` | Szukaj w dół pliku |
+| `?tekst` | Szukaj w górę pliku |
+| `n` | Następny wynik |
+| `N` | Poprzedni wynik |
+
+Przykład:
+
+```vim
+/error
+```
+
+---
+
+## Wyszukiwanie słowa pod kursorem
+
+| Komenda | Działanie |
+|----------|------------|
+| `*` | Następne wystąpienie słowa pod kursorem |
+| `#` | Poprzednie wystąpienie słowa pod kursorem |
+
+Przykład:
+
+1. Ustaw kursor na:
+
+```python
+device_id
+```
+
+2. Naciśnij:
+
+```vim
+*
+```
+
+3. Przechodź po wynikach:
+
+```vim
+n
+```
+
+---
+
+## Czyszczenie podświetlenia
+
+```vim
+:noh
+```
+
+lub
+
+```vim
+:nohlsearch
+```
+
+---
+
+## Wyszukiwanie z uwzględnieniem wielkości liter
+
+W `.vimrc`:
+
+```vim
+set ignorecase
+set smartcase
+```
+
+Przykłady:
+
+```vim
+/error
+```
+
+znajdzie:
+
+```txt
+error
+Error
+ERROR
+```
+
+Natomiast:
+
+```vim
+/Error
+```
+
+znajdzie tylko:
+
+```txt
+Error
+```
+
+---
+
+## Przydatne regexy
+
+### ATM lub REC
+
+```vim
+/\v(ATM|REC)
+```
+
+### ATM-001, REC-123 itp.
+
+```vim
+/\v(ATM|REC)-\d+
+```
+
+### Wszystkie liczby
+
+```vim
+/\v\d+
+```
+
+### Data YYYY-MM-DD
+
+```vim
+/\v\d{4}-\d{2}-\d{2}
+```
+
+---
+
+## Zamiana tekstu
+
+### Jedno wystąpienie w bieżącej linii
+
+```vim
+:s/stare/nowe/
+```
+
+### Wszystkie wystąpienia w bieżącej linii
+
+```vim
+:s/stare/nowe/g
+```
+
+### Cały plik
+
+```vim
+:%s/stare/nowe/g
+```
+
+### Cały plik z potwierdzeniem
+
+```vim
+:%s/stare/nowe/gc
+```
+
+Opcje:
+
+| Klawisz | Działanie |
+|----------|------------|
+| y | Zamień |
+| n | Pomiń |
+| a | Zamień wszystkie |
+| q | Zakończ |
+
+---
+
+## Przydatne wyszukiwania w Pythonie
+
+### Wszystkie funkcje
+
+```vim
+/^def
+```
+
+### Wszystkie klasy
+
+```vim
+/^class
+```
+
+### Wszystkie importy
+
+```vim
+/^import
+```
+
+lub
+
+```vim
+/^\s*from
+```
+
+### Wszystkie returny
+
+```vim
+/\<return\>
+```
+
+### Wszystkie TODO
+
+```vim
+/TODO
+```
+
+---
+
+## TOP 5 skrótów do codziennej pracy
+
+```vim
+/text      szukaj tekstu
+*          szukaj słowa pod kursorem
+n          następny wynik
+N          poprzedni wynik
+:noh       usuń podświetlenie
+```
+
+---
+
+## Analiza zmiennej w kodzie
+
+1. Ustaw kursor na zmiennej:
+
+```python
+device_id
+```
+
+2. Naciśnij:
+
+```vim
+*
+```
+
+3. Skacz po użyciach:
+
+```vim
+n
+```
+
+To jeden z najszybszych sposobów śledzenia przepływu zmiennej w projekcie.
