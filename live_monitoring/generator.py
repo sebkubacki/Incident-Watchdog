@@ -84,4 +84,5 @@ def generate_log():
         delay = random.uniform(1, 5)
         time.sleep(delay)
 
-generate_log()
+if __name__ == "__main__":
+    generate_log()
