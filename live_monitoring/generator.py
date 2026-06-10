@@ -48,6 +48,7 @@ def get_timestamp():
     formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
     return formatted_now
 
+
 def generate_event():
     rnd_device = get_random_device()
     device_type = get_device_type(rnd_device)
@@ -84,5 +85,46 @@ def generate_log():
         delay = random.uniform(1, 5)
         time.sleep(delay)
 
-if __name__ == "__main__":
-    generate_log()
+def initialize_device_states():
+    devices = list(ATM_DEVICES) + list(REC_DEVICES)
+    device_states = {}
+    for device in devices:
+        
+        device_states[device] = {}
+
+        device_type = get_device_type(device)
+        modules = get_avalible_modules(device_type)
+
+        for module in modules:
+            device_states[device][module] = {
+                    "event": None,
+                    "status": None,
+                    "timestamp": None
+                    }
+    return device_states
+
+def get_active_devices(device_states):
+    return [
+        device
+        for device, modules in device_states.items()
+        if any(
+            data["event"] is not None
+            for data in modules.values()
+        )
+    ]
+
+device_states = initialize_device_states()
+log_data = generate_event()
+print(log_data)
+device_states[log_data["device"]][log_data["module"]] = {
+        "event": log_data["event"],
+        "status": log_data["status"]
+        }
+
+active_devices = get_active_devices(device_states)
+print(active_devices)
+
+
+
+#if __name__ == "__main__":
+#    generate_log()

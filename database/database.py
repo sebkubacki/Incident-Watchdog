@@ -39,16 +39,20 @@ def insert_incident(con, log_data):
         )
     con.execute(sql, values)
 
-def get_all_incidents():
-    doit = "SELECT * FROM incidents"
-    result = con.execute(doit)
+def get_all_incidents(con):
+    sql = "SELECT * FROM incidents"
+    result = con.execute(sql)
     return result.fetchall()
 
+def get_device_history(con, device_id):
+    sql = "SELECT * FROM incidents WHERE device_id = ?"
+    result = con.execute(sql, (device_id,))
+    return result.fetchall()
 
 log_data = generate_event()
 con = create_connection()
 insert_incident(con, log_data)
-incidents = get_all_incidents()
+history = get_device_history(con, "ATM001")
 con.commit()
-print(incidents)
+print(history)
 
