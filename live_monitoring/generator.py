@@ -114,6 +114,7 @@ def get_active_devices(device_states):
     ]
 
 device_states = initialize_device_states()
+print(device_states["ATM001"])
 log_data = generate_event()
 print(log_data)
 device_states[log_data["device"]][log_data["module"]] = {
