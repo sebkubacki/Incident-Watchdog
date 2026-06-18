@@ -52,7 +52,7 @@ ATM_MODULES = {
             "CASSETTE_LOW_LEVEL": "WARNING",
             "CASSETTE_EMPTY": "ERROR",
             "CASSETTE_OK": "OK",
-            "CASSETTE_REPELNISHED": "OK"
+            "CASSETTE_REPELNISHED": "OK",
             "CASSETTE_JAMMED": "ERROR"
             },
         "SHUTTER": {

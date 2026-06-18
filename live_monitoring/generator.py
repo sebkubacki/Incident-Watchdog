@@ -1,6 +1,7 @@
 import random
 import time
 from datetime import datetime
+from config.lifecycles import DEFAULT_STATES, MODULE_LIFECYCLES
 from config.devices import ATM_DEVICES, REC_DEVICES
 from config.events import COMMON_MODULES, ATM_MODULES, REC_MODULES
 
@@ -88,18 +89,19 @@ def generate_log():
 def initialize_device_states():
     devices = list(ATM_DEVICES) + list(REC_DEVICES)
     device_states = {}
+    
     for device in devices:
-        
         device_states[device] = {}
 
         device_type = get_device_type(device)
         modules = get_avalible_modules(device_type)
 
         for module in modules:
+            default_event = DEFAULT_STATES[module]
             device_states[device][module] = {
-                    "event": None,
-                    "status": None,
-                    "timestamp": None
+                    "event": default_event,
+                    "status": modules[module][default_event],
+                    "timestamp": get_timestamp()
                     }
     return device_states
 
