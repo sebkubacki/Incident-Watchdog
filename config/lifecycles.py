@@ -268,5 +268,134 @@ MODULE_LIFECYCLES = {
         "SHUTTER_OK_AFTER_RESTART": [
             "SHUTTER_CLOSED"
         ]
+    },
+
+    "REJECT_BIN": {
+
+        "BIN_EMPTY": [
+            "BIN_NEAR_FULL",
+            "BIN_REMOVED"
+        ],
+
+        "BIN_NEAR_FULL": [
+            "BIN_EMPTY",
+            "BIN_FULL"
+        ],
+
+        "BIN_FULL": [
+            "BIN_FULL",
+            "BIN_EMPTY"
+        ],
+
+        "BIN_REMOVED": [
+            "BIN_INSERTED"
+        ],
+
+        "BIN_INSERTED": [
+            "BIN_EMPTY"
+        ]
+    },
+
+    "DEPOSIT_MODULE": {
+
+        "DEPOSIT_OK": [
+            "NOTE_REJECTED",
+            "DEPOSIT_BIN_NEAR_FULL",
+            "TRANSPORT_BLOCKED"
+        ],
+
+        "NOTE_REJECTED": [
+            "DEPOSIT_OK",
+            "NOTE_REJECTED",
+            "TRANSPORT_BLOCKED"
+        ],
+
+        "DEPOSIT_BIN_NEAR_FULL": [
+            "DEPOSIT_OK",
+            "DEPOSIT_BIM_FULL"
+        ],
+
+        "DEPOSIT_BIM_FULL": [
+            "DEPOSIT_BIM_FULL",
+            "DEPOSIT_RECOVERED"
+        ],
+
+        "TRANSPORT_BLOCKED": [
+            "TRANSPORT_BLOCKED",
+            "DEPOSIT_RECOVERED"
+        ],
+
+        "DEPOSIT_RECOVERED": [
+            "DEPOSIT_OK"
+        ]
+    },
+
+    "ESCROW": {
+
+        "ESCROW_OK": [
+            "ESCROW_NEAR_CAPACITY",
+            "ESCROW_JAM"
+        ],
+
+        "ESCROW_NEAR_CAPACITY": [
+            "ESCROW_OK",
+            "ESCROW_FULL",
+            "ESCROW_JAM"
+        ],
+
+        "ESCROW_FULL": [
+            "ESCROW_FULL",
+            "ESCROW_CLEARED"
+        ],
+
+        "ESCROW_JAM": [
+            "ESCROW_JAM",
+            "ESCROW_CLEARED"
+        ],
+
+        "ESCROW_CLEARED": [
+            "ESCROW_OK"
+        ]
+    },
+
+    "CASH_RECYCLER": {
+
+        "RECYCLER_OK": [
+            "LOW_RECYCLING_CASH",
+            "RECYCLER_SYNC_REQUIRED",
+            "NOTE_PATH_BLOCKED",
+            "RECYCLER_JAM"
+        ],
+
+        "LOW_RECYCLING_CASH": [
+            "RECYCLER_OK",
+            "CASSETTE_MISMATCH",
+            "RECYCLER_SYNC_REQUIRED"
+        ],
+
+        "RECYCLER_SYNC_REQUIRED": [
+            "RECYCLER_OK",
+            "RECYCLER_JAM",
+            "CASSETTE_MISMATCH"
+        ],
+
+        "NOTE_PATH_BLOCKED": [
+            "NOTE_PATH_BLOCKED",
+            "RECYCLER_RECOVERED"
+        ],
+
+        "RECYCLER_JAM": [
+            "RECYCLER_JAM",
+            "RECYCLER_RECOVERED"
+        ],
+
+        "CASSETTE_MISMATCH": [
+            "CASSETTE_MISMATCH",
+            "RECYCLER_RECOVERED"
+        ],
+
+        "RECYCLER_RECOVERED": [
+            "RECYCLER_OK"
+        ]
     }
 }

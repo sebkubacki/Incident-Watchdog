@@ -49,6 +49,13 @@ def get_timestamp():
     formatted_now = now.strftime("%Y-%m-%d %H:%M:%S")
     return formatted_now
 
+    
+def get_next_event(device, module):
+    current_event = device_states[device][module]["event"]
+    possible_next_events = MODULE_LIFECYCLES[module][current_event]
+    next_event = random.choice(possible_next_events)
+    return next_event
+
 
 def generate_event():
     rnd_device = get_random_device()
@@ -56,9 +63,14 @@ def generate_event():
     avalible_modules = get_avalible_modules(device_type)
     rnd_module = get_random_module(avalible_modules)
     events = get_events_for_module(avalible_modules, rnd_module)
-    rnd_event = get_random_event(events)
+    rnd_event = get_next_event(rnd_device, rnd_module)
     status = get_status(events, rnd_event)
     timestamp = get_timestamp()
+    print(device_states[rnd_device][rnd_module])
+    device_states[rnd_device][rnd_module]["event"] = rnd_event
+    device_states[rnd_device][rnd_module]["status"] = status
+    device_states[rnd_device][rnd_module]["timestamp"] = timestamp
+    print(device_states[rnd_device][rnd_module])
     log_data = {
             "device": rnd_device,
             "device_type": device_type,
@@ -114,20 +126,16 @@ def get_active_devices(device_states):
             for data in modules.values()
         )
     ]
+    
 
 device_states = initialize_device_states()
-print(device_states["ATM001"])
 log_data = generate_event()
 print(log_data)
-device_states[log_data["device"]][log_data["module"]] = {
-        "event": log_data["event"],
-        "status": log_data["status"]
-        }
-
 active_devices = get_active_devices(device_states)
 print(active_devices)
 
-
+for _ in range(300):
+    print(generate_event())
 
 #if __name__ == "__main__":
 #    generate_log()
