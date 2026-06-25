@@ -13,8 +13,70 @@ def get_status_count(incidents, selected_status):
             status_counter+=1
     return status_counter
 
+def get_current_device_states(device_states):
+    current_states = []
+    for device in device_states:
+        for module in device_states[device]:
+            module_data = device_states[device][module]
+            current_states.append({
+                "device": device,
+                "module": module,
+                "event": module_data["event"],
+                "status": module_data["status"],
+                "timestamp": module_data["timestamp"]
+                })
+    return current_states
+    
+def filter_by_status(states, selected_status):
+    filtered_states = []
+    for state in states:
+        if state["status"] == selected_status:
+            filtered_states.append(state)
+    return filtered_states
+
+def filter_by_device(states, selected_device):
+    filtered_states = []
+    for state in states:
+        if state["device"] == selected_device:
+            filtered_states.append(state)
+    return filtered_states
+
+def filter_by_module(states, selected_module):
+    filtered_states = []
+    for state in states:
+        if state["module"] == selected_module:
+            filtered_states.append(state)
+    return filtered_states
+
+def get_devices(states):
+    devices = []
+    for state in states:
+        if state["device"] not in devices:
+            devices.append(state["device"])
+    return devices
+
+def get_modules(states):
+    modules = []
+    for state in states:
+        if states["module"] not in modules:
+            modules.append(states["module"])
+    return modules
+
+def show_states(states):
+    print(f"{'DEVICE':<8}{'STATUS':<8} {'MODULE':<16} {'EVENT':<32}")
+    print("-" * 80)
+    states = sorted(states, key=lambda state: state["device"])
+    for state in states:
+        print(
+                f"{state['device']:<8} "
+                f"{state['status']:<8}"
+                f"{state['module']:<16} "
+                f"{state['event']:<32} "
+                )
+
 def show_list(items):
-    print("\n".join(items))
+    for index, item in enumerate(items, start=1):
+        print(f"{index}. {item}")
 
 def show_history(incidents, devices):
     while True:
@@ -104,4 +166,5 @@ def show_sorted(incidents):
                                    )
     for inc in time_sorted_incidents:
         print(f"{inc} \n")
+
 

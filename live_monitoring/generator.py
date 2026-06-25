@@ -66,11 +66,9 @@ def generate_event():
     rnd_event = get_next_event(rnd_device, rnd_module)
     status = get_status(events, rnd_event)
     timestamp = get_timestamp()
-    print(device_states[rnd_device][rnd_module])
     device_states[rnd_device][rnd_module]["event"] = rnd_event
     device_states[rnd_device][rnd_module]["status"] = status
     device_states[rnd_device][rnd_module]["timestamp"] = timestamp
-    print(device_states[rnd_device][rnd_module])
     log_data = {
             "device": rnd_device,
             "device_type": device_type,
@@ -130,12 +128,19 @@ def get_active_devices(device_states):
 
 device_states = initialize_device_states()
 log_data = generate_event()
-print(log_data)
+#print(log_data)
 active_devices = get_active_devices(device_states)
-print(active_devices)
 
 for _ in range(300):
-    print(generate_event())
+    generate_event()
+
+from scripts.detector import get_current_device_states, filter_by_status, filter_by_device, filter_by_module, show_states
+
+current_states = get_current_device_states(device_states)
+error_states = filter_by_status(current_states, "OK")
+network_states = filter_by_module(current_states, "NETWORK")
+atm001_states = filter_by_device(network_states, "REC007")
+
 
 #if __name__ == "__main__":
 #    generate_log()

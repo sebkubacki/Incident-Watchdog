@@ -1,26 +1,27 @@
-from detector import (
-        show_history,
-        count_statuses,
-        top_incidents,
-        detect_instability,
-        show_sorted()vim
+from scripts.detector import (
+    get_current_device_states,
+    filter_by_status,
+    filter_by_device,
+    filter_by_module,
+    get_devices,
+    get_modules,
+    show_states,
+    show_list
 )
 
 
-
-def main_menu(incidents, devices):
+def main_menu(device_states):
 
     MAIN_MENU = """
 ========================
  INCIDENT WATCHDOG
 ========================
 
-1. Show ATM history
-2. Count statuses
-3. Top incidents
-4. Detect instability
-5. Show all incidents sorted by time
-6. Exit
+1. Show current states
+2. Filter by status
+3. Filter by device
+4. Filter by module
+5. Exit
 """
 
     while True:
@@ -29,21 +30,44 @@ def main_menu(incidents, devices):
         choice = input("Select option: ")
 
         if choice == "1":
-            show_history(incidents, devices)
+            current_states = get_current_device_states(device_states)
+            show_states(current_states)
 
         elif choice == "2":
-            count_statuses(incidents)
+            current_states = get_current_device_states(device_states)
+            statuses = [
+                    "OK",
+                    "INFO",
+                    "WARNING",
+                    "ERROR"
+                    ]
+            show_list(statuses)
+            status_choice = int(input("Select status: "))
+            selected_status = statuses[status_choice - 1]
+            filtered_states = filter_by_status(current_states, selected_status)
+            show_states(filtered_states)
 
         elif choice == "3":
-            top_incidents(incidents)
+                current_states = get_current_device_states(device_states)
+                devices = get_devices(current_states)
+                show_list(devices)
+                device_choice = int(input("Select device: "))
+                selected_device = devices[device_choice - 1]
+                filtered_states = filter_by_device(
+                    current_states,
+                    selected_device
+                )
+                show_states(filtered_states)
 
         elif choice == "4":
-            detect_instability(incidents, devices)
-
+            current_states = get_current_states(device_states)
+            modules = get_modules(current_states)
+            show_list(modules)
+            module_choice = int(input("Select module: "))
+            selected_module = modules[module_choice - 1]
+            filtered_states = filter_by_module(current_states, selected_module)
+            show_states(filtered_states)
         elif choice == "5":
-            show_sorted(incidents)
-
-        elif choice == "6":
             break
 
         else:
