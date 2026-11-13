@@ -1,2 +1,4 @@
-#!python3 ./watchdog/main.py
-print("Incident Watchdog started")
+from watchdog.app import main
+
+if __name__ == "__main__":
+    main()

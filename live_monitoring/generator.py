@@ -126,21 +126,6 @@ def get_active_devices(device_states):
     ]
     
 
-device_states = initialize_device_states()
-log_data = generate_event()
-#print(log_data)
-active_devices = get_active_devices(device_states)
-
-for _ in range(300):
-    generate_event()
-
-from scripts.detector import get_current_device_states, filter_by_status, filter_by_device, filter_by_module, show_states
-
-current_states = get_current_device_states(device_states)
-error_states = filter_by_status(current_states, "OK")
-network_states = filter_by_module(current_states, "NETWORK")
-atm001_states = filter_by_device(network_states, "REC007")
-
 
 #if __name__ == "__main__":
 #    generate_log()

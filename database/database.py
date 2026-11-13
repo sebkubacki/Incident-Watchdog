@@ -1,5 +1,4 @@
 import sqlite3
-from live_monitoring.generator import generate_event
 
 
 def create_connection():
@@ -49,10 +48,4 @@ def get_device_history(con, device_id):
     result = con.execute(sql, (device_id,))
     return result.fetchall()
 
-log_data = generate_event()
-con = create_connection()
-insert_incident(con, log_data)
-history = get_device_history(con, "ATM001")
-con.commit()
-print(history)
 
